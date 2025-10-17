@@ -8,8 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User
-#from models import Person
+from models import db, User 
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -36,6 +35,7 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
+#Ruta GET/user que devuelve todos los usuarios
 @app.route('/user', methods=['GET'])
 def handle_hello():
     users = User.query.all() #SELECT * FROM 'user'
@@ -53,6 +53,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+#Ruta POST/user que crea un nuevo usuario
 @app.route('/user', methods=['POST'])
 def add_user():
     body = request.get_json(silent=True)
@@ -75,6 +76,7 @@ def add_user():
 
     return jsonify({"msg": "Usuario creado exitosamente", "user": new_user.serialize()}), 201
 
+#Ruta GET/user_favorites/<int:user_id> que devuelve los favoritos de un usuario
 @app.route('/user_favorites/<int:user_id>', methods=['GET'])
 def get_user_favorites(user_id):
     user = User.query.get(user_id)
