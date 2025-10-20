@@ -32,7 +32,6 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "password": self.password,
             "is_active": self.is_active,
         }
 
@@ -51,6 +50,14 @@ class Characters(db.Model):
     def __repr__(self):
         return f'<Personaje {self.name}>'
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "height": self.height,
+            "weight": self.weight
+        }
+
 # Modelo FavoritesCharacters, que representa los personajes favoritos de los usuarios
 
 
@@ -66,8 +73,15 @@ class FavoritesCharacters(db.Model):
     character: Mapped['Characters'] = relationship(
         back_populates='favorites_by')
 
-    def __repr__(self):
-        return f'Al usuario {self.user.id} le gusta el personaje {self.character.name}'
+    def __repr__(self): return f"A este usuario le gusta el personaje de: {self.character.name if self.character else f'id={self.character_id}'}"
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "character_id": self.character_id
+        }
+
 
 # Modelo Planets, que representa a los planetas de Star Wars
 
@@ -84,6 +98,15 @@ class Planets(db.Model):
     def __repr__(self):
         return f'<Planet {self.name}>'
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "diameter": self.diameter,
+            "population": self.population
+        }
+
+
 # Modelo FavoritesPlanets, que representa los planetas favoritos de los usuarios
 
 
@@ -98,9 +121,14 @@ class FavoritesPlanets(db.Model):
     planet_id: Mapped[int] = mapped_column(ForeignKey('planets.id'))
     planet: Mapped['Planets'] = relationship(back_populates='favorites_by')
 
-    def __repr__(self):
-        return f'Al usuario {self.user.id} le gusta el planeta {self.planet.name}'
-
+    def __repr__(self): return f"A este usuario le gusta el planeta: {self.planet.name if self.planet else f'id={self.planet_id}'}"
+      
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "planet_id": self.planet_id
+        }
 # Modelo Starships, que representa a las naves espaciales de Star Wars
 
 

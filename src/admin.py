@@ -12,6 +12,7 @@ class UsersModelView(ModelView):
     column_auto_selected = True
     column_list = ['id', 'email', 'is_active',
                    'favorites', 'favorites_planets']
+    
 
 
 # CharactersModelView sirve para administrar los personajes
