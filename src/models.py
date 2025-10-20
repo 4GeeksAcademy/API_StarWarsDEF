@@ -18,6 +18,7 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
 
+    # Relaciones con los modelos de favoritos
     favorites: Mapped[list['FavoritesCharacters']] = relationship(
         back_populates='user')
     favorites_planets: Mapped[list['FavoritesPlanets']
@@ -73,7 +74,8 @@ class FavoritesCharacters(db.Model):
     character: Mapped['Characters'] = relationship(
         back_populates='favorites_by')
 
-    def __repr__(self): return f"A este usuario le gusta el personaje de: {self.character.name if self.character else f'id={self.character_id}'}"
+    def __repr__(
+        self): return f"A este usuario le gusta el personaje de: {self.character.name if self.character else f'id={self.character_id}'}"
 
     def serialize(self):
         return {
@@ -92,6 +94,7 @@ class Planets(db.Model):
     name: Mapped[str] = mapped_column(String(80), unique=True, nullable=False)
     diameter: Mapped[int] = mapped_column(Integer)
     population: Mapped[int] = mapped_column(Integer)
+
     favorites_by: Mapped[list['FavoritesPlanets']
                          ] = relationship(back_populates='planet')
 
@@ -114,24 +117,22 @@ class FavoritesPlanets(db.Model):
     __tablename__ = 'favorites_planets'
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
-
     user: Mapped['User'] = relationship(
         back_populates='favorites_planets')
 
     planet_id: Mapped[int] = mapped_column(ForeignKey('planets.id'))
     planet: Mapped['Planets'] = relationship(back_populates='favorites_by')
 
-    def __repr__(self): return f"A este usuario le gusta el planeta: {self.planet.name if self.planet else f'id={self.planet_id}'}"
-      
+    def __repr__(
+        self): return f"A este usuario le gusta el planeta: {self.planet.name if self.planet else f'id={self.planet_id}'}"
+
     def serialize(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
             "planet_id": self.planet_id
         }
-# Modelo Starships, que representa a las naves espaciales de Star Wars
-
-
+# Los Starships los dejo sin modificar
 class Starships(db.Model):
     __tablename__ = 'starships'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -141,10 +142,8 @@ class Starships(db.Model):
 
     def __repr__(self):
         return f'<Starship {self.name}>'
-
-# Modelo FavoritesStarships, que representa las naves espaciales favoritas de los usuarios
-
-
+    
+    
 class FavoritesStarships(db.Model):
     __tablename__ = 'favorites_starships'
     id: Mapped[int] = mapped_column(primary_key=True)
