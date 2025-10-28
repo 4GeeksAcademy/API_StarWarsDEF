@@ -9,8 +9,6 @@ from sqlalchemy.schema import ForeignKey
 db = SQLAlchemy()
 
 # Modelo User, que representa a los usuarios de la aplicación
-
-
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[str] = mapped_column(
@@ -37,8 +35,6 @@ class User(db.Model):
         }
 
 # Modelo Characters, que representa a los personajes de Star Wars
-
-
 class Characters(db.Model):
     __tablename__ = 'characters'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -60,8 +56,6 @@ class Characters(db.Model):
         }
 
 # Modelo FavoritesCharacters, que representa los personajes favoritos de los usuarios
-
-
 class FavoritesCharacters(db.Model):
     __tablename__ = 'favorites_characters'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -86,8 +80,6 @@ class FavoritesCharacters(db.Model):
 
 
 # Modelo Planets, que representa a los planetas de Star Wars
-
-
 class Planets(db.Model):
     __tablename__ = 'planets'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -111,8 +103,6 @@ class Planets(db.Model):
 
 
 # Modelo FavoritesPlanets, que representa los planetas favoritos de los usuarios
-
-
 class FavoritesPlanets(db.Model):
     __tablename__ = 'favorites_planets'
     id: Mapped[int] = mapped_column(primary_key=True)
