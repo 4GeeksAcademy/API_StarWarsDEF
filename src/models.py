@@ -132,7 +132,7 @@ class FavoritesPlanets(db.Model):
             "user_id": self.user_id,
             "planet_id": self.planet_id
         }
-# Los Starships los dejo sin modificar
+# Modelo Starships, representa las naves de Star Wars
 class Starships(db.Model):
     __tablename__ = 'starships'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -143,7 +143,7 @@ class Starships(db.Model):
     def __repr__(self):
         return f'<Starship {self.name}>'
     
-    
+# Modelo FavoritesStarships, que representa las naves favoritas de los usuarios   
 class FavoritesStarships(db.Model):
     __tablename__ = 'favorites_starships'
     id: Mapped[int] = mapped_column(primary_key=True)
